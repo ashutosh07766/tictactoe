@@ -13,29 +13,29 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // ✅ Corrected checkout syntax
                 git branch: 'master', url: 'https://github.com/ashutosh07766/tictactoe.git'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                echo "Building with Maven..."
+                sh 'mvn clean package -Dspring-boot.run.jvmArguments="--enable-native-access=ALL-UNNAMED"'
             }
         }
 
         stage('Test') {
             steps {
+                echo "Running tests..."
                 sh 'mvn test'
             }
         }
 
-        stage('RUN JAR') {
+        stage('Run JAR') {
             steps {
                 script {
                     echo "Running JAR..."
                     
-                    // ✅ Using nohup to run the JAR in the background
                     sh "nohup java -jar target/${JAR_NAME} > /dev/null 2>&1 &"
                     
                     echo 'JAR is running in the background'
