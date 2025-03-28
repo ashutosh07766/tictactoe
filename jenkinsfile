@@ -11,7 +11,7 @@ pipeline{
             stage('checkout')
             {
                 steps{
-               git branch:'master' url: 'https://github.com/ashutosh07766/tictactoe.git'
+               git branch:'master', url: 'https://github.com/ashutosh07766/tictactoe.git'
                 }
             }
             stage('build')
